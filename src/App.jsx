@@ -1,11 +1,13 @@
-import Navbar from "./components/Navbar";
+import Navbar from './components/layout/Navbar';
+import Hero from './components/sections/Hero';
 
-function App() {
+export default function App() {
   return (
-    <div style={{ background: "var(--bg-alt)", color: "var(--text)" }}>
+    <>
       <Navbar />
-    </div>
+      <main>
+        <Hero />
+      </main>
+    </>
   );
 }
-
-export default App;
