@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Mail, MapPin, Phone, Loader2, CheckCircle2, AlertCircle, Send } from "lucide-react";
 
-const WEB3FORMS_KEY = "dd4361e1-3979-4f9a-9be4-2240e02edb90";
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 
 const contactInfo = [
   {
