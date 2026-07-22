@@ -53,9 +53,9 @@ export default function Hero() {
             Available for work
           </div>
 
-<H1 className="tracking-tight text-5xl sm:text-6xl lg:text-7xl max-w-2xl lg:max-w-3xl">
-  Argie Gonzales
-</H1>
+          <H1 className="tracking-tight text-5xl sm:text-6xl lg:text-7xl max-w-2xl lg:max-w-3xl">
+            Argie Gonzales
+          </H1>
 
           <Paragraph className="text-2xl sm:text-3xl lg:text-4xl text-slate-600 dark:text-white max-w-2xl">
             Front-end developer building fast, modern, and accessible web experiences.
