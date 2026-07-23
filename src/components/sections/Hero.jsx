@@ -1,6 +1,9 @@
-import H1 from "../ui/H1";
-import Paragraph from "../ui/Paragraph";
 import { Download } from "lucide-react";
+import Section from "./Section";
+import Heading from "../ui/Heading";
+import Text from "../ui/Text";
+import Badge from "../ui/Badge";
+import Button from "../ui/Button";
 
 const socialLinks = [
   {
@@ -34,62 +37,59 @@ const socialLinks = [
 
 export default function Hero() {
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center px-4 sm:px-8 relative overflow-hidden bg-gradient-to-br from-teal-500/[0.04] to-purple-500/[0.04] dark:from-teal-500/[0.07] dark:to-purple-500/[0.07]"
-    >
-      {/* Glow orbs behind the text */}
+    <Section id="home" glow={false} containerClass="py-0 max-w-7xl">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="mx-auto w-full max-w-7xl grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 items-center">
-        {/* ---------- Left: Text ---------- */}
+
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 items-center">
         <div className="flex flex-col items-center md:items-start space-y-8 py-12">
-          {/* Available for work pill */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/10 px-5 py-2 text-sm font-medium text-teal-400 animate-pulse">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-teal-500" />
-            </span>
-            Available for work
-          </div>
+          <Badge dot>Available for work</Badge>
 
-          <H1 className="tracking-tight text-5xl sm:text-6xl lg:text-7xl max-w-2xl lg:max-w-3xl">
+          <Heading
+            as="h1"
+            size="h1"
+            className="max-w-2xl lg:max-w-3xl"
+          >
             Argie Gonzales
-          </H1>
+          </Heading>
 
-          <Paragraph className="text-2xl sm:text-3xl lg:text-4xl text-slate-600 dark:text-white max-w-2xl">
-            Front-end developer building fast, modern, and accessible web experiences.
-          </Paragraph>
+          <Text size="2xl" className="max-w-2xl">
+            Front-end developer building fast, modern, and accessible web
+            experiences.
+          </Text>
 
-          {/* Buttons */}
           <div className="flex flex-wrap items-center gap-4 md:items-start">
-            <a
+            <Button
+              as="a"
               href="/assets/Gonzales-Resume.pdf"
               download
-              className="inline-flex items-center gap-2 min-h-[48px] min-w-[48px] px-8 py-4 rounded-full bg-teal-500 text-white font-semibold hover:bg-teal-600 active:bg-teal-700 transition-colors touch-manipulation active:scale-[0.98]"
+              size="lg"
             >
               <Download size={20} />
               <span className="hidden sm:inline">Download Resume</span>
-              <span className="sm:hidden" aria-hidden="true">Resume</span>
-            </a>
+              <span className="sm:hidden" aria-hidden="true">
+                Resume
+              </span>
+            </Button>
 
             {socialLinks.map(({ href, label, svg }) => (
-              <a
+              <Button
                 key={label}
+                as="a"
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
                 title={label}
-                className="flex items-center justify-center min-h-[48px] min-w-[48px] p-4 rounded-full bg-slate-200 text-slate-600 hover:bg-teal-500 hover:text-white dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-teal-500 dark:hover:text-white transition-colors touch-manipulation active:scale-[0.95]"
+                variant="secondary"
+                size="icon"
               >
                 {svg}
-              </a>
+              </Button>
             ))}
           </div>
         </div>
 
-        {/* ---------- Right: Picture ---------- */}
         <div className="flex justify-center items-center py-12">
           <div className="relative group">
             <div className="w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full overflow-hidden shadow-2xl ring-4 ring-teal-400/30 hover:shadow-[0_0_80px_rgba(45,212,191,0.4)] transition-all duration-300 hover:scale-105">
@@ -100,14 +100,12 @@ export default function Hero() {
                 loading="eager"
               />
             </div>
-
-            {/* Tooltip on hover */}
             <div className="absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap bg-slate-900/90 text-white text-sm px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg">
               Hey there! 👋
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
