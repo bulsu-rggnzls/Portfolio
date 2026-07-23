@@ -15,7 +15,7 @@ export default function SectionHeader({
         {title}
       </Heading>
       {description && (
-        <Text variant="muted" size="base" className="max-w-xl mx-auto">
+        <Text variant="muted" size="lg" className="max-w-xl mx-auto">
           {description}
         </Text>
       )}

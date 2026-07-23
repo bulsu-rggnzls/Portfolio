@@ -11,7 +11,6 @@ export default function Projects() {
       <div className="text-center space-y-6">
         <SectionHeader
           title="Projects"
-          titleSize="2xl"
           description="Currently developing projects and building real-world applications. Check back soon for updates!"
         />
         <div className="flex justify-center">
