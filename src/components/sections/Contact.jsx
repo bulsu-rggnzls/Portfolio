@@ -109,7 +109,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <Badge variant="status" dot>
+          <Badge variant="status" dot className="whitespace-nowrap">
             Available for new projects
           </Badge>
         </div>
