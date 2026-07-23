@@ -2,6 +2,13 @@ import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { Maximize2, ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import Section from "./Section";
+import SectionHeader from "./SectionHeader";
+import Heading from "../ui/Heading";
+import Text from "../ui/Text";
+import Card from "../ui/Card";
+import Button from "../ui/Button";
+import Badge from "../ui/Badge";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -99,20 +106,11 @@ function IssuerLogo({ issuer }) {
 
 function CertificateCard({ cert }) {
   return (
-    <div className="group relative h-full rounded-2xl border border-teal-400/20 bg-white/70 dark:bg-slate-900/40 backdrop-blur-xl shadow-lg shadow-teal-500/5 hover:shadow-teal-500/20 hover:border-teal-400/50 transition-all duration-500 flex flex-col overflow-hidden">
-      {/* Top Badge */}
-      <div className="flex items-center justify-between px-5 pt-5 pb-3">
+    <Card className="h-full rounded-2xl shadow-lg shadow-teal-500/5 hover:shadow-teal-500/20 hover:border-teal-400/50 transition-all duration-500 flex flex-col overflow-hidden">
+      <div className="px-5 pt-5 pb-4">
         <IssuerLogo issuer={cert.issuerLogo} />
-        <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 rounded-full bg-teal-500/10 text-teal-300 border border-teal-400/30 shadow-[0_0_12px_-2px_rgba(45,212,191,0.25)]">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-teal-400" />
-          </span>
-          Verified Credential
-        </span>
       </div>
 
-      {/* Image / Preview Area */}
       <a
         href={cert.credentialUrl}
         target="_blank"
@@ -127,7 +125,7 @@ function CertificateCard({ cert }) {
         >
           <div className="flex flex-col items-center justify-center w-full h-full gap-3 bg-slate-900/40">
             <FileText size={36} className="text-teal-400/50" />
-            <span className="text-xs font-mono text-slate-500 dark:text-slate-500">Certificate Preview</span>
+            <span className="text-xs text-slate-500 dark:text-slate-500">Certificate Preview</span>
           </div>
         </object>
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none" />
@@ -138,30 +136,24 @@ function CertificateCard({ cert }) {
         </div>
       </a>
 
-      {/* Content */}
       <div className="flex flex-col gap-3 px-5 pt-4 pb-5 flex-1">
-        <h3 className="font-bold text-base leading-snug text-slate-900 dark:text-white line-clamp-2">
+        <Heading as="h3" size="h3" className="leading-snug line-clamp-2">
           {cert.title}
-        </h3>
+        </Heading>
 
-        <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
+        <Text variant="muted" size="xs" className="dark:text-slate-300">
           {cert.issuer} &bull; Issued {cert.date}
-        </p>
+        </Text>
 
-        {/* Skills Pills */}
         <div className="flex flex-wrap gap-1.5 mt-auto">
           {cert.skills.map((skill) => (
-            <span
-              key={skill}
-              className="font-mono text-[10px] font-medium px-2 py-0.5 rounded-md bg-slate-900/80 dark:bg-black/60 text-teal-400/90 border border-teal-400/15"
-            >
+            <Badge key={skill} variant="skill" size="xs">
               {skill}
-            </span>
+            </Badge>
           ))}
         </div>
-
       </div>
-    </div>
+    </Card>
   );
 }
 
@@ -169,70 +161,60 @@ export default function Certifications() {
   const swiperRef = useRef(null);
 
   return (
-    <section
-      id="certifications"
-      className="min-h-screen flex items-center px-4 sm:px-8 relative overflow-hidden bg-gradient-to-br from-teal-500/[0.04] to-purple-500/[0.04] dark:from-teal-500/[0.06] dark:to-purple-500/[0.06]"
-    >
-      <div className="absolute top-40 -left-40 w-96 h-96 bg-teal-400/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-400/15 rounded-full blur-3xl pointer-events-none" />
+    <Section id="certifications">
+      <div className="space-y-14">
+        <SectionHeader
+          title="Certifications &amp; Credentials"
+          description="Professional certifications and credentials from industry-recognized programs"
+        />
 
-      <div className="mx-auto w-full max-w-6xl py-20 space-y-14">
-        {/* Header */}
-        <div className="text-center space-y-3">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-white">
-            Certifications &amp; Credentials
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-base max-w-xl mx-auto">
-            Professional certifications and credentials from industry-recognized programs
-          </p>
-        </div>
-
-        {/* Navigation Arrows */}
         <div className="flex items-center justify-center gap-3">
-          <button
+          <Button
             onClick={() => swiperRef.current?.slidePrev()}
-            className="flex items-center justify-center w-10 h-10 rounded-xl border border-teal-400/40 text-teal-400 bg-teal-500/5 hover:bg-teal-500/15 hover:border-teal-400/70 hover:shadow-[0_0_16px_-4px_rgba(45,212,191,0.3)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none"
+            variant="ghost"
+            size="icon-sm"
             aria-label="Previous slide"
           >
             <ChevronLeft size={20} />
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={() => swiperRef.current?.slideNext()}
-            className="flex items-center justify-center w-10 h-10 rounded-xl border border-teal-400/40 text-teal-400 bg-teal-500/5 hover:bg-teal-500/15 hover:border-teal-400/70 hover:shadow-[0_0_16px_-4px_rgba(45,212,191,0.3)] transition-all duration-300 disabled:opacity-30 disabled:pointer-events-none"
+            variant="ghost"
+            size="icon-sm"
             aria-label="Next slide"
           >
             <ChevronRight size={20} />
-          </button>
+          </Button>
         </div>
 
-        {/* Carousel */}
-        <Swiper
-          onBeforeInit={(swiper) => {
-            swiperRef.current = swiper;
-          }}
-          modules={[Pagination]}
-          pagination={{
-            clickable: true,
-            renderBullet: (_, className) =>
-              `<span class="${className} custom-swiper-bullet"></span>`,
-          }}
-          spaceBetween={24}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="pb-14 !overflow-visible [&_.swiper-wrapper]:items-stretch"
-        >
-          {certificates.map((cert) => (
-            <SwiperSlide key={cert.id} className="!h-auto">
-              <CertificateCard cert={cert} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="relative">
+          <Swiper
+            onBeforeInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            modules={[Pagination]}
+            pagination={{
+              clickable: true,
+              renderBullet: (_, className) =>
+                `<span class="${className} custom-swiper-bullet"></span>`,
+            }}
+            spaceBetween={24}
+            slidesPerView={1}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="pb-14 [&_.swiper-wrapper]:items-stretch"
+          >
+            {certificates.map((cert) => (
+              <SwiperSlide key={cert.id} className="!h-auto">
+                <CertificateCard cert={cert} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
-      {/* Pagination & Swiper overrides */}
       <style>{`
         .custom-swiper-bullet {
           width: 8px !important;
@@ -258,6 +240,6 @@ export default function Certifications() {
           gap: 6px !important;
         }
       `}</style>
-    </section>
+    </Section>
   );
 }
