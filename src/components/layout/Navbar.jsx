@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import ThemeToggle from "./ThemeToggle";
+// import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
   { href: "#home", label: "Home" },
@@ -16,12 +16,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-4 sm:px-8 h-16 backdrop-blur-xl transition-colors"
+      className="fixed top-0 inset-x-0 z-50 flex items-center justify-center px-4 sm:px-8 h-16 backdrop-blur-xl transition-colors"
       style={{ background: "var(--nav-bg, rgba(0,0,0,0.6))" }}
     >
-      {/* Left: theme button */}
-      <ThemeToggle />
-
       {/* Desktop links */}
       <ul className="hidden md:flex items-center gap-10 sm:gap-16 list-none m-0 p-0">
         {NAV_LINKS.map((link) => (
@@ -41,13 +38,10 @@ export default function Navbar() {
         onClick={() => setOpen(!open)}
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
-        className="md:hidden flex items-center justify-center min-h-[44px] min-w-[44px] p-3 text-slate-900 dark:text-white touch-manipulation active:scale-[0.95]"
+        className="md:hidden absolute right-4 sm:right-8 flex items-center justify-center min-h-[44px] min-w-[44px] p-3 text-slate-900 dark:text-white touch-manipulation active:scale-[0.95]"
       >
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
-
-      {/* Right spacer (keeps links centered on desktop) */}
-      <div className="hidden md:block w-12 shrink-0" />
 
       {/* Mobile menu overlay */}
       {open && (
