@@ -1,9 +1,11 @@
-import { Download } from "lucide-react";
+import { useState } from "react";
+import { Download, Code2 } from "lucide-react";
 import Section from "./Section";
 import Heading from "../ui/Heading";
 import Text from "../ui/Text";
 import Badge from "../ui/Badge";
 import Button from "../ui/Button";
+import DevConsoleModal from "../ui/DevConsoleModal";
 
 const socialLinks = [
   {
@@ -36,6 +38,8 @@ const socialLinks = [
 ];
 
 export default function Hero() {
+  const [showAbout, setShowAbout] = useState(false);
+
   return (
     <Section id="home" glow={false} containerClass="py-0 max-w-7xl">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
@@ -45,13 +49,36 @@ export default function Hero() {
         <div className="flex flex-col items-center md:items-start space-y-8 py-12">
           <Badge dot>Available for work</Badge>
 
-          <Heading
-            as="h1"
-            size="h1"
-            className="max-w-2xl lg:max-w-3xl"
-          >
-            Argie Gonzales
-          </Heading>
+          <div className="flex items-center gap-2">
+            <Heading
+              as="h1"
+              size="h1"
+              className="max-w-2xl lg:max-w-3xl"
+            >
+              Argie Gonzales
+            </Heading>
+            <div className="relative group/icon shrink-0">
+              <button
+                onClick={() => setShowAbout(true)}
+                className="p-1.5 rounded-lg text-teal-400 bg-teal-500/10 hover:text-teal-300 hover:bg-teal-500/15 transition-all duration-200"
+                aria-label="About me"
+                title="About me"
+              >
+                <Code2 size={22} />
+              </button>
+              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 opacity-0 group-hover/icon:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+                <div className="bg-slate-900 dark:bg-slate-800 text-white text-[10px] leading-relaxed font-mono px-3 py-2 rounded-lg shadow-xl whitespace-nowrap border border-white/10">
+                  <div className="text-teal-400 text-[9px] mb-1 font-medium">about.js</div>
+                  <div><span className="text-purple-400">const</span> me <span className="text-purple-400">=</span> {"{"}</div>
+                  <div><span className="text-teal-400">name</span>: <span className="text-amber-400">"Argie"</span>,</div>
+                  <div><span className="text-teal-400">role</span>: <span className="text-amber-400">"Front-End Dev"</span>,</div>
+                  <div><span className="text-teal-400">location</span>: <span className="text-amber-400">"Bocaue, Bulacan"</span>,</div>
+                  <div className="text-purple-400">{"}"};</div>
+                </div>
+                <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-900 dark:border-t-slate-800" />
+              </div>
+            </div>
+          </div>
 
           <Text size="2xl" className="max-w-2xl">
             Front-end developer building fast, modern, and accessible web
@@ -94,7 +121,7 @@ export default function Hero() {
           <div className="relative group">
             <div className="w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full overflow-hidden shadow-2xl ring-4 ring-teal-400/30 hover:shadow-[0_0_80px_rgba(45,212,191,0.4)] transition-all duration-300 hover:scale-105">
               <img
-                src="/assets/images/argie.jpg"
+                src="/assets/images/rg.jpg"
                 alt="Argie Gonzales"
                 className="w-full h-full object-cover object-top"
                 loading="eager"
@@ -106,6 +133,11 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      <DevConsoleModal
+        isOpen={showAbout}
+        onClose={() => setShowAbout(false)}
+      />
     </Section>
   );
 }
