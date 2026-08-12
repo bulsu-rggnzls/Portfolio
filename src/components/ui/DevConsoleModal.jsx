@@ -27,7 +27,7 @@ function AboutCode() {
         <span className="text-purple-400">export</span>{" "}<span className="text-purple-400">default</span> {"{"}
       </CodeLine>
       <CodeLine num={7}>
-        {"  "}<span className="text-teal-400">name</span>: <span className="text-amber-400">"Argie Gonzales"</span>,
+        {"  "}<span className="text-teal-400">name</span>: <span className="text-amber-400">"ArgieGonzales"</span>,
       </CodeLine>
       <CodeLine num={8}>
         {"  "}<span className="text-teal-400">role</span>: <span className="text-amber-400">"Front-End Developer"</span>,
