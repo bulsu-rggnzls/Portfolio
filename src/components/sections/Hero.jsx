@@ -55,7 +55,7 @@ export default function Hero() {
               size="h1"
               className="max-w-2xl lg:max-w-3xl"
             >
-              Argie Gonzales
+              ArgieGonzales
             </Heading>
             <div className="relative group/icon shrink-0">
               <button
@@ -121,8 +121,8 @@ export default function Hero() {
           <div className="relative group">
             <div className="w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full overflow-hidden shadow-2xl ring-4 ring-teal-400/30 hover:shadow-[0_0_80px_rgba(45,212,191,0.4)] transition-all duration-300 hover:scale-105">
               <img
-                src="/assets/images/rg.jpg"
-                alt="Argie Gonzales"
+                src="/assets/images/ArgieGonzales.jpg?v=1"
+                alt="ArgieGonzales"
                 className="w-full h-full object-cover object-top"
                 loading="eager"
               />
