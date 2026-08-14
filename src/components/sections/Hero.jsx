@@ -55,7 +55,7 @@ export default function Hero() {
               size="h1"
               className="max-w-2xl lg:max-w-3xl"
             >
-              ArgieGonzales
+              Argie Gonzales
             </Heading>
             <div className="relative group/icon shrink-0">
               <button
