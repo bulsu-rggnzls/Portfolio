@@ -107,7 +107,7 @@ function IssuerLogo({ issuer }) {
 function CertificateCard({ cert }) {
   return (
     <Card className="h-full rounded-2xl shadow-lg shadow-teal-500/5 hover:shadow-teal-500/20 hover:border-teal-400/50 transition-all duration-500 flex flex-col overflow-hidden">
-      <div className="px-5 pt-5 pb-4">
+      <div className="px-4 pt-4 pb-4">
         <IssuerLogo issuer={cert.issuerLogo} />
       </div>
 
@@ -115,7 +115,7 @@ function CertificateCard({ cert }) {
         href={cert.credentialUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mx-5 h-44 rounded-xl border border-teal-400/10 bg-slate-800/20 overflow-hidden relative block group/preview"
+        className="mx-4 h-44 mb-4 rounded-xl border border-teal-400/10 bg-slate-800/20 overflow-hidden relative block group/preview"
       >
         <object
           data={cert.image}
@@ -136,7 +136,7 @@ function CertificateCard({ cert }) {
         </div>
       </a>
 
-      <div className="flex flex-col gap-3 px-5 pt-4 pb-5 flex-1">
+      <div className="flex flex-col gap-3 px-4 pt-2 pb-4 flex-1">
         <Heading as="h3" size="h3" className="leading-snug line-clamp-2">
           {cert.title}
         </Heading>
@@ -161,14 +161,15 @@ export default function Certifications() {
   const swiperRef = useRef(null);
 
   return (
-    <Section id="certifications">
-      <div className="space-y-14">
+    <Section id="certifications" containerClass="py-12">
+      <div className="space-y-10">
         <SectionHeader
           title="Certifications &amp; Credentials"
           description="Professional certifications and credentials from industry-recognized programs"
+          className="space-y-3"
         />
 
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-3 mb-6">
           <Button
             onClick={() => swiperRef.current?.slidePrev()}
             variant="ghost"
