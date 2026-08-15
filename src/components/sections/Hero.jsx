@@ -45,8 +45,8 @@ export default function Hero() {
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-12 items-center">
-        <div className="flex flex-col items-center md:items-start space-y-8 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 md:gap-12 items-center">
+        <div className="flex flex-col items-center md:items-start space-y-6 md:space-y-8 pt-24 md:pt-12 pb-6 md:pb-12">
           <Badge dot>Available for work</Badge>
 
           <div className="flex items-center gap-2">
@@ -117,7 +117,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center py-12">
+        <div className="flex justify-center items-center pt-0 pb-8 md:py-12">
           <div className="relative group">
             <div className="w-80 h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem] rounded-full overflow-hidden shadow-2xl ring-4 ring-teal-400/30 hover:shadow-[0_0_80px_rgba(45,212,191,0.4)] transition-all duration-300 hover:scale-105">
               <img
