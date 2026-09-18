@@ -13,7 +13,7 @@ const githubIcon = (
   </svg>
 );
 
-const techStack = [
+const webTechStack = [
   "React",
   "Vite",
   "Tailwind CSS",
@@ -22,11 +22,20 @@ const techStack = [
   "Zod",
 ];
 
+const mobileTechStack = [
+  "React Native",
+  "Expo",
+  "JavaScript",
+  "SQLite",
+  "Supabase",
+];
+
 export default function Projects() {
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewProject, setPreviewProject] = useState("tracker");
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState(0);
-  const total = 1;
+  const total = 2;
   const dragging = useRef(false);
   const startX = useRef(0);
   const scrollStart = useRef(0);
@@ -163,6 +172,7 @@ export default function Projects() {
           ref={scrollRef}
           className="flex overflow-x-auto snap-always -mx-4 px-4 sm:-mx-8 sm:px-8 gap-8 pb-4 scrollbar-hide snap-smooth cursor-grab select-none"
         >
+          {/* Application Tracker */}
           <Card
             group
             className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
@@ -214,7 +224,7 @@ export default function Projects() {
                   details, and salary analytics in one streamlined workflow.
                 </Text>
                 <div className="flex flex-wrap gap-2">
-                  {techStack.map((tech) => (
+                  {webTechStack.map((tech) => (
                     <span
                       key={tech}
                       className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
@@ -239,7 +249,7 @@ export default function Projects() {
                 <div className="relative overflow-hidden border-t border-white/[0.08]">
                   <button
                     type="button"
-                    onClick={() => setPreviewOpen(true)}
+                    onClick={() => { setPreviewProject("tracker"); setPreviewOpen(true); }}
                     aria-label="Zoom into Application Tracker preview"
                     className="group/img relative block w-full cursor-zoom-in"
                   >
@@ -247,6 +257,110 @@ export default function Projects() {
                       src="/assets/images/Application-Tracker.png"
                       alt="Application Tracker preview — click to zoom"
                       className="w-full h-56 sm:h-64 object-cover object-top brightness-[0.92] transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
+                      loading="lazy"
+                    />
+                    <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
+                    <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-slate-200 bg-slate-900/90 border border-white/10 backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
+                      <ZoomIn size={13} className="text-teal-400" />
+                      Zoom
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* iStocked */}
+          <Card
+            group
+            className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3">
+                <Badge variant="status" dot size="sm">
+                  Live Demo Ready
+                </Badge>
+                <span className="text-xs text-slate-400 dark:text-slate-500">
+                  Featured Project
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Live preview"
+                  title="Live demo"
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
+                >
+                  <ExternalLink size={18} />
+                </a>
+                <a
+                  href="https://github.com/bulsu-rggnzls/istocked"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Source code"
+                  title="Source code"
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
+                >
+                  {githubIcon}
+                </a>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+              <div className="space-y-5">
+                <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl text-slate-900 dark:text-white">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
+                    <Briefcase size={17} />
+                  </span>
+                  iStocked
+                </Heading>
+                <Text variant="muted" size="sm" className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  A mobile dashboard for phone sellers to track inventory, record
+                  sales, and monitor income, profits, and costs in one streamlined
+                  platform built with React Native.
+                </Text>
+                <div className="flex flex-wrap gap-2">
+                  {mobileTechStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-teal-400/40 dark:group-hover:border-teal-400/40 group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)] dark:group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)]">
+                <div className="flex items-center justify-between bg-slate-900/90 border-b border-white/10 px-4 py-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                    iStocked
+                  </span>
+                </div>
+                <div className="relative overflow-hidden border-t border-white/[0.08]">
+                  <button
+                    type="button"
+                    onClick={() => { setPreviewProject("iphone"); setPreviewOpen(true); }}
+                    aria-label="Zoom into iStocked preview"
+                    className="group/img relative flex w-full h-56 sm:h-64 cursor-zoom-in gap-2 p-2"
+                  >
+                    <img
+                      src="/assets/images/iphone1.png"
+                      alt="iStocked — main metrics"
+                      className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
+                      loading="lazy"
+                    />
+                    <img
+                      src="/assets/images/iphone2.png"
+                      alt="iStocked — device preview"
+                      className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
                       loading="lazy"
                     />
                     <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
@@ -283,7 +397,7 @@ export default function Projects() {
           onClick={() => setPreviewOpen(false)}
           role="dialog"
           aria-modal="true"
-          aria-label="Application Tracker full preview"
+          aria-label="Project full preview"
         >
           <div className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]" />
           <div
@@ -297,7 +411,7 @@ export default function Projects() {
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
               </div>
               <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                application-tracker.vercel.app
+                {previewProject === "tracker" ? "application-tracker.vercel.app" : "iStocked"}
               </span>
               <button
                 onClick={() => setPreviewOpen(false)}
@@ -308,11 +422,26 @@ export default function Projects() {
               </button>
             </div>
             <div className="max-h-[75vh] overflow-y-auto">
-              <img
-                src="/assets/images/Application-Tracker.png"
-                alt="Application Tracker full preview"
-                className="w-full h-auto object-contain object-top"
-              />
+              {previewProject === "tracker" ? (
+                <img
+                  src="/assets/images/Application-Tracker.png"
+                  alt="Application Tracker full preview"
+                  className="w-full h-auto object-contain object-top"
+                />
+              ) : (
+                <div className="flex gap-4 p-4">
+                  <img
+                    src="/assets/images/iphone1.png"
+                    alt="iStocked — main metrics"
+                    className="w-1/2 h-auto object-cover object-top rounded-xl"
+                  />
+                  <img
+                    src="/assets/images/iphone2.png"
+                    alt="iStocked — device preview"
+                    className="w-1/2 h-auto object-cover object-top rounded-xl"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
