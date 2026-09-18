@@ -1,19 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Section from "./Section";
 import SectionHeader from "./SectionHeader";
 import Badge from "../ui/Badge";
 import Heading from "../ui/Heading";
 import Text from "../ui/Text";
 import Card from "../ui/Card";
-import { ExternalLink, Briefcase, ZoomIn, X } from "lucide-react";
+import { ExternalLink, Briefcase, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 const githubIcon = (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
   </svg>
 );
-
-
 
 const techStack = [
   "React",
@@ -26,6 +24,95 @@ const techStack = [
 
 export default function Projects() {
   const [previewOpen, setPreviewOpen] = useState(false);
+  const scrollRef = useRef(null);
+  const [current, setCurrent] = useState(0);
+  const total = 1;
+  const dragging = useRef(false);
+  const startX = useRef(0);
+  const scrollStart = useRef(0);
+
+  function scrollTo(index) {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const card = container.children[index];
+    if (!card) return;
+    container.scrollTo({ left: card.offsetLeft - 16, behavior: "smooth" });
+    setCurrent(index);
+  }
+
+  function prev() {
+    scrollTo(Math.max(0, current - 1));
+  }
+
+  function next() {
+    scrollTo(Math.min(total - 1, current + 1));
+  }
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    function onScroll() {
+      const cards = Array.from(container.children);
+      const scrollLeft = container.scrollLeft;
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - 16 - scrollLeft);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      setCurrent(closest);
+    }
+
+    function onMouseDown(e) {
+      dragging.current = true;
+      startX.current = e.pageX;
+      scrollStart.current = container.scrollLeft;
+      container.style.scrollBehavior = "auto";
+      container.style.cursor = "grabbing";
+    }
+
+    function onMouseMove(e) {
+      if (!dragging.current) return;
+      e.preventDefault();
+      const dx = e.pageX - startX.current;
+      container.scrollLeft = scrollStart.current - dx;
+    }
+
+    function onMouseUp() {
+      if (!dragging.current) return;
+      dragging.current = false;
+      container.style.scrollBehavior = "smooth";
+      container.style.cursor = "";
+      const cards = Array.from(container.children);
+      const scrollLeft = container.scrollLeft;
+      let closest = 0;
+      let minDist = Infinity;
+      cards.forEach((card, i) => {
+        const dist = Math.abs(card.offsetLeft - 16 - scrollLeft);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = i;
+        }
+      });
+      scrollTo(closest);
+    }
+
+    container.addEventListener("scroll", onScroll, { passive: true });
+    container.addEventListener("mousedown", onMouseDown);
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+
+    return () => {
+      container.removeEventListener("scroll", onScroll);
+      container.removeEventListener("mousedown", onMouseDown);
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    };
+  }, []);
 
   useEffect(() => {
     if (!previewOpen) return;
@@ -42,117 +129,152 @@ export default function Projects() {
   }, [previewOpen]);
 
   return (
-    <Section id="projects" glow={false} containerClass="max-w-4xl">
+    <Section id="projects" glow={false} containerClass="max-w-6xl">
       <div className="absolute -top-40 -right-40 w-96 h-96 bg-teal-400/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-400/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="space-y-8">
-        <SectionHeader
-          title="Projects"
-          description="A collection of web applications and tools I've built."
-          className="space-y-3"
-        />
+      <SectionHeader
+        title="Projects"
+        description="A collection of web applications and tools I've built."
+        className="space-y-3 mb-8"
+      />
 
-        <Card
-          group
-          className="p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
+      <div className="relative">
+        {current > 0 && (
+          <button
+            onClick={prev}
+            aria-label="Previous project"
+            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-400 hover:border-teal-400/40 transition-all shadow-lg"
+          >
+            <ChevronLeft size={20} />
+          </button>
+        )}
+        {current < total - 1 && (
+          <button
+            onClick={next}
+            aria-label="Next project"
+            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-400 hover:border-teal-400/40 transition-all shadow-lg"
+          >
+            <ChevronRight size={20} />
+          </button>
+        )}
+
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-always -mx-4 px-4 sm:-mx-8 sm:px-8 gap-8 pb-4 scrollbar-hide snap-smooth cursor-grab select-none"
         >
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
-            <div className="flex items-center gap-3">
-              <Badge variant="status" dot size="sm">
-                Live Demo Ready
-              </Badge>
-              <span className="text-xs text-slate-400 dark:text-slate-500">
-                Featured Project
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <a
-                href="https://application-tracker-dun.vercel.app/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Live preview"
-                title="Live demo"
-                className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-              >
-                <ExternalLink size={18} />
-              </a>
-              <a
-                href="https://github.com/bulsu-rggnzls/Application-Tracker"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Source code"
-                title="Source code"
-                className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-              >
-                {githubIcon}
-              </a>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
-            <div className="space-y-5">
-              <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl text-slate-900 dark:text-white">
-                <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
-                  <Briefcase size={17} />
-                </span>
-                Application Tracker
-              </Heading>
-
-              <Text variant="muted" size="sm" className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                A modern job application tracking platform designed to help
-                developers manage job applications, interview pipelines, offer
-                details, and salary analytics in one streamlined workflow.
-              </Text>
-
-              <div className="flex flex-wrap gap-2">
-                {techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-teal-400/40 dark:group-hover:border-teal-400/40 group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)] dark:group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)]">
-              <div className="flex items-center justify-between bg-slate-900/90 border-b border-white/10 px-4 py-2.5">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                </div>
-                <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                  application-tracker.vercel.app
+          <Card
+            group
+            className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
+              <div className="flex items-center gap-3">
+                <Badge variant="status" dot size="sm">
+                  Live Demo Ready
+                </Badge>
+                <span className="text-xs text-slate-400 dark:text-slate-500">
+                  Featured Project
                 </span>
               </div>
-
-              <div className="relative overflow-hidden border-t border-white/[0.08]">
-                <button
-                  type="button"
-                  onClick={() => setPreviewOpen(true)}
-                  aria-label="Zoom into Application Tracker preview"
-                  className="group/img relative block w-full cursor-zoom-in"
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://application-tracker-dun.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Live preview"
+                  title="Live demo"
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
                 >
-                  <img
-                    src="/assets/images/Application-Tracker.png"
-                    alt="Application Tracker preview — click to zoom"
-                    className="w-full h-56 sm:h-64 object-cover object-top brightness-[0.92] transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
-                    loading="lazy"
-                  />
-                  <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
-                  <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-slate-200 bg-slate-900/90 border border-white/10 backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
-                    <ZoomIn size={13} className="text-teal-400" />
-                    Zoom
-                  </span>
-                </button>
+                  <ExternalLink size={18} />
+                </a>
+                <a
+                  href="https://github.com/bulsu-rggnzls/Application-Tracker"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Source code"
+                  title="Source code"
+                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
+                >
+                  {githubIcon}
+                </a>
               </div>
             </div>
-          </div>
-        </Card>
+
+            <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+              <div className="space-y-5">
+                <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl text-slate-900 dark:text-white">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
+                    <Briefcase size={17} />
+                  </span>
+                  Application Tracker
+                </Heading>
+                <Text variant="muted" size="sm" className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
+                  A modern job application tracking platform designed to help
+                  developers manage job applications, interview pipelines, offer
+                  details, and salary analytics in one streamlined workflow.
+                </Text>
+                <div className="flex flex-wrap gap-2">
+                  {techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-teal-400/40 dark:group-hover:border-teal-400/40 group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)] dark:group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)]">
+                <div className="flex items-center justify-between bg-slate-900/90 border-b border-white/10 px-4 py-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+                  </div>
+                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                    application-tracker.vercel.app
+                  </span>
+                </div>
+                <div className="relative overflow-hidden border-t border-white/[0.08]">
+                  <button
+                    type="button"
+                    onClick={() => setPreviewOpen(true)}
+                    aria-label="Zoom into Application Tracker preview"
+                    className="group/img relative block w-full cursor-zoom-in"
+                  >
+                    <img
+                      src="/assets/images/Application-Tracker.png"
+                      alt="Application Tracker preview — click to zoom"
+                      className="w-full h-56 sm:h-64 object-cover object-top brightness-[0.92] transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
+                      loading="lazy"
+                    />
+                    <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
+                    <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-slate-200 bg-slate-900/90 border border-white/10 backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
+                      <ZoomIn size={13} className="text-teal-400" />
+                      Zoom
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {Array.from({ length: total }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollTo(i)}
+              aria-label={`Go to project ${i + 1}`}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                current === i
+                  ? "bg-teal-400 w-6"
+                  : "bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+              }`}
+            />
+          ))}
+        </div>
       </div>
 
       {previewOpen && (
