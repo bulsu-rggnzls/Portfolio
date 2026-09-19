@@ -182,7 +182,7 @@ export default function Skills() {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-10 lg:gap-12">
-          <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-6 gap-4 auto-rows-1fr">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 auto-rows-1fr">
             {techStack.map(({ label, color, svg, brandHex }) => (
               <Card
                 key={label}
@@ -198,7 +198,7 @@ export default function Skills() {
                 >
                   {svg}
                 </div>
-                <span className="text-xs font-medium text-slate-500 dark:text-slate-300 group-hover:text-slate-700 dark:group-hover:text-white tracking-wide text-center leading-tight">
+                <span className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-slate-300 group-hover:text-slate-700 dark:group-hover:text-white tracking-wide text-center leading-tight">
                   {label}
                 </span>
               </Card>
@@ -217,11 +217,11 @@ export default function Skills() {
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-teal-500/10 text-teal-500 shrink-0 mt-0.5">
                   {icon}
                 </div>
-                <div className="space-y-0.5">
+                <div className="space-y-0.5 min-w-0">
                   <Heading as="h4" size="h4">
                     {title}
                   </Heading>
-                  <Text variant="muted" size="sm">
+                  <Text variant="muted" size="sm" className="break-words">
                     {description}
                   </Text>
                 </div>
