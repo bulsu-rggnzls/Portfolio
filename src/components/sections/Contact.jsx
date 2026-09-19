@@ -76,30 +76,30 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-10 items-stretch">
         <div className="flex flex-col justify-between h-full space-y-6">
           <div className="space-y-6">
-            <Text variant="default" size="base">
+            <Text variant="default" size="base" className="text-slate-200">
               I&apos;m currently open to full-time opportunities and freelance
               projects. Let&apos;s build something amazing together!
             </Text>
 
             <div className="space-y-4">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
-                <div key={label} className="flex items-center gap-4">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-400/30 text-teal-400 shrink-0">
+                <div key={label} className="flex items-start sm:items-center gap-4 min-w-0">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
                     <Icon size={18} />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <Text variant="muted" size="xs" className="font-mono uppercase tracking-wider">
                       {label}
                     </Text>
                     {href ? (
                       <a
                         href={href}
-                        className="text-sm font-medium text-slate-900 dark:text-white hover:text-teal-400 transition-colors"
+                        className="block text-sm font-medium text-slate-200 hover:text-emerald-400 transition-colors break-words"
                       >
                         {value}
                       </a>
                     ) : (
-                      <Text variant="default" size="sm" className="font-medium text-slate-900 dark:text-white">
+                      <Text variant="default" size="sm" className="font-medium text-slate-200 break-words">
                         {value}
                       </Text>
                     )}
@@ -109,22 +109,22 @@ export default function Contact() {
             </div>
           </div>
 
-          <Badge variant="status" dot className="whitespace-nowrap">
+          <Badge variant="status" dot className="whitespace-normal text-center sm:whitespace-nowrap">
             Available for new projects
           </Badge>
         </div>
 
-        <Card className="rounded-2xl p-5 sm:p-6 shadow-lg shadow-teal-500/5">
+        <Card className="rounded-2xl p-5 sm:p-6 shadow-lg shadow-lg shadow-emerald-500/5">
           {isSent ? (
             <div className="flex flex-col items-center justify-center text-center py-8 space-y-3">
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-teal-500/10 border border-teal-400/30">
-                <CheckCircle2 size={28} className="text-teal-400" />
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                <CheckCircle2 size={28} className="text-emerald-400" />
               </div>
-              <Heading as="h3" size="h3" className="text-white">Message Received!</Heading>
-              <Text variant="muted" size="xs" className="max-w-sm">
+              <Heading as="h3" size="h3" className="text-slate-100">Message Received!</Heading>
+              <Text variant="muted" size="xs" className="max-w-sm text-slate-400">
                 Thank you, Argie has received your message and will get back to
                 you soon at{" "}
-                <span className="text-teal-400 font-mono text-[11px]">
+                <span className="text-emerald-400 font-mono text-[11px]">
                   rggonzales.work@gmail.com
                 </span>
                 .
@@ -149,7 +149,7 @@ export default function Contact() {
                     name="name"
                     required
                     disabled={isSubmitting}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12151a] border border-slate-700/60 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-teal-400/60 focus:shadow-[0_0_16px_-4px_rgba(45,212,191,0.2)] transition-all duration-300 disabled:opacity-50"
+                    className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
                     placeholder="John Doe"
                   />
                 </div>
@@ -162,7 +162,7 @@ export default function Contact() {
                     name="email"
                     required
                     disabled={isSubmitting}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#12151a] border border-slate-700/60 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-teal-400/60 focus:shadow-[0_0_16px_-4px_rgba(45,212,191,0.2)] transition-all duration-300 disabled:opacity-50"
+                    className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -177,7 +177,7 @@ export default function Contact() {
                   name="subject"
                   required
                   disabled={isSubmitting}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#12151a] border border-slate-700/60 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-teal-400/60 focus:shadow-[0_0_16px_-4px_rgba(45,212,191,0.2)] transition-all duration-300 disabled:opacity-50"
+                  className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
                   placeholder="Project Collaboration"
                 />
               </div>
@@ -191,7 +191,7 @@ export default function Contact() {
                   required
                   rows={4}
                   disabled={isSubmitting}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#12151a] border border-slate-700/60 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-teal-400/60 focus:shadow-[0_0_16px_-4px_rgba(45,212,191,0.2)] transition-all duration-300 resize-none disabled:opacity-50"
+                  className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all resize-none disabled:opacity-50"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -199,7 +199,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-teal-500 text-white font-semibold text-sm hover:bg-teal-600 active:bg-teal-700 transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
               >
                 {isSubmitting ? (
                   <>
