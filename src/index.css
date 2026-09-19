@@ -8,6 +8,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 :root {
@@ -17,23 +18,48 @@ html {
 }
 
 .dark {
-  --nav-bg: rgba(0, 0, 0, 0.7);
-  --body-bg: #0a0a0a;
-  --body-color: #ffffff;
+  --nav-bg: rgba(2, 6, 23, 0.7);
+  --body-bg: #020617;
+  --body-color: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-width: 320px;
 }
 
 body {
   background-color: var(--body-bg);
   color: var(--body-color);
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  body {
+    -webkit-text-size-adjust: 100%;
+  }
 }
 
 .dark nav a {
-  color: #ffffff !important;
+  color: #f1f5f9 !important;
 }
 
-.dark #home h1,
+.dark #home h1 {
+  color: #f1f5f9 !important;
+}
+
 .dark #home p {
-  color: #ffffff !important;
+  color: #94a3b8 !important;
 }
 
 @utility scrollbar-hide {
