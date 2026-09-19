@@ -25,7 +25,7 @@ export default function Navbar() {
           <li key={link.href}>
             <a
               href={link.href}
-              className="text-sm font-semibold hover:text-teal-400 transition-colors whitespace-nowrap text-slate-900 dark:text-white"
+              className="text-sm font-semibold hover:text-emerald-400 transition-colors whitespace-nowrap text-slate-900 dark:text-white"
             >
               {link.label}
             </a>
@@ -52,7 +52,7 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-center min-h-[44px] min-w-[44px] px-4 py-3 text-lg font-semibold text-white hover:text-teal-400 transition-colors touch-manipulation active:scale-[0.98]"
+                  className="flex items-center justify-center min-h-[44px] min-w-[44px] px-4 py-3 text-lg font-semibold text-white hover:text-emerald-400 transition-colors touch-manipulation active:scale-[0.98]"
                 >
                   {link.label}
                 </a>
