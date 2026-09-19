@@ -5,7 +5,7 @@ const words = ["Innovating,", "Empowering,", "Delivering."];
 
 export default function IntroOverlay() {
   const [showIntro, setShowIntro] = useState(true);
-
+  
   useEffect(() => {
     const timer = setTimeout(() => setShowIntro(false), 3600);
     return () => clearTimeout(timer);
