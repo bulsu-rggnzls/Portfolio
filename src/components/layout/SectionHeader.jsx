@@ -1,6 +1,6 @@
 import Heading from "../ui/Heading";
 import Text from "../ui/Text";
-import { cn } from "../../lib/utils";
+import { cn } from "../../utils/cn";
 
 export default function SectionHeader({
   title,

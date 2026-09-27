@@ -2,79 +2,18 @@ import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { Maximize2, ChevronLeft, ChevronRight, FileText } from "lucide-react";
-import Section from "./Section";
-import SectionHeader from "./SectionHeader";
-import Heading from "../ui/Heading";
-import Text from "../ui/Text";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
-import Badge from "../ui/Badge";
+import Section from "../../../components/layout/Section";
+import SectionHeader from "../../../components/layout/SectionHeader";
+import Heading from "../../../components/ui/Heading";
+import Text from "../../../components/ui/Text";
+import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
+import Badge from "../../../components/ui/Badge";
 
 import "swiper/css";
 import "swiper/css/pagination";
 
-const certificates = [
-  {
-    id: "python",
-    title: "Python Programming",
-    issuer: "Certiport",
-    date: "2025",
-    credentialUrl: "/assets/certificates/Python.pdf",
-    image: "/assets/certificates/Python.pdf",
-    issuerLogo: "Certiport",
-    skills: ["Python", "Data Structures", "Algorithms", "Automation"],
-  },
-  {
-    id: "cybersecurity",
-    title: "Introduction to Cybersecurity",
-    issuer: "Cisco Networking Academy",
-    date: "2025",
-    credentialUrl: "/assets/certificates/Cisco%20Certificate.pdf",
-    image: "/assets/certificates/Cisco%20Certificate.pdf",
-    issuerLogo: "Cisco",
-    skills: ["Cybersecurity", "Threats", "Vulnerabilities", "Defense"],
-  },
-  {
-    id: "devices",
-    title: "Networking Devices and Initial Configuration",
-    issuer: "Cisco Networking Academy",
-    date: "2023",
-    credentialUrl: "/assets/certificates/Devices.pdf",
-    image: "/assets/certificates/Devices.pdf",
-    issuerLogo: "Cisco",
-    skills: ["Routers", "Switches", "Configuration", "Initial Setup"],
-  },
-  {
-    id: "hardware",
-    title: "Computer Hardware Basics",
-    issuer: "Cisco Networking Academy",
-    date: "2023",
-    credentialUrl: "/assets/certificates/Hardware.pdf",
-    image: "/assets/certificates/Hardware.pdf",
-    issuerLogo: "Cisco",
-    skills: ["PC Assembly", "Peripherals", "Storage", "Troubleshooting"],
-  },
-  {
-    id: "basics",
-    title: "Networking Basics",
-    issuer: "Cisco Networking Academy",
-    date: "2023",
-    credentialUrl: "/assets/certificates/Basics.pdf",
-    image: "/assets/certificates/Basics.pdf",
-    issuerLogo: "Cisco",
-    skills: ["OSI Model", "IP Addressing", "Ethernet", "Protocols"],
-  },
-  {
-    id: "packet-tracer",
-    title: "Getting Started with Cisco Packet Tracer",
-    issuer: "Cisco Networking Academy",
-    date: "2023",
-    credentialUrl: "/assets/certificates/Packet-Tracer.pdf",
-    image: "/assets/certificates/Packet-Tracer.pdf",
-    issuerLogo: "Cisco",
-    skills: ["Simulation", "Topology Design", "IoT", "Troubleshooting"],
-  },
-];
+import { certificates } from "../data";
 
 function IssuerLogo({ issuer }) {
   if (issuer === "Cisco") {

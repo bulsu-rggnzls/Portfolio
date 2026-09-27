@@ -1,4 +1,4 @@
-import { cn } from "../../lib/utils";
+import { cn } from "../../utils/cn";
 
 const sizes = {
   h1: "text-5xl sm:text-6xl lg:text-7xl font-extrabold",

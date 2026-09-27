@@ -1,33 +1,13 @@
 import { useState } from "react";
-import { Mail, MapPin, Phone, Loader2, CheckCircle2, AlertCircle, Send } from "lucide-react";
-import Heading from "../ui/Heading";
-import Text from "../ui/Text";
-import Section from "./Section";
-import SectionHeader from "./SectionHeader";
-import Card from "../ui/Card";
-import Badge from "../ui/Badge";
-
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "rggonzales.work@gmail.com",
-    href: "mailto:rggonzales.work@gmail.com",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Bocaue, Bulacan",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "09466836962",
-    href: "tel:09466836962",
-  },
-];
+import { Loader2, CheckCircle2, AlertCircle, Send } from "lucide-react";
+import Heading from "../../../components/ui/Heading";
+import Text from "../../../components/ui/Text";
+import Section from "../../../components/layout/Section";
+import SectionHeader from "../../../components/layout/SectionHeader";
+import Card from "../../../components/ui/Card";
+import Badge from "../../../components/ui/Badge";
+import { WEB3FORMS_KEY } from "../../../config/env";
+import { contactInfo } from "../data";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);

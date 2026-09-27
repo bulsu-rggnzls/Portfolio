@@ -1,11 +1,11 @@
-import IntroOverlay from './components/ui/IntroOverlay';
+import IntroOverlay from './components/layout/IntroOverlay';
 import Navbar from './components/layout/Navbar';
-import Hero from './components/sections/Hero';
-import Projects from './components/sections/Projects';
-import Skills from './components/sections/Skills';
-import Education from './components/sections/Education';
-import Certifications from './components/sections/Certifications';
-import Contact from './components/sections/Contact';
+import { Hero } from './features/hero';
+import { Projects } from './features/projects';
+import { Skills } from './features/skills';
+import { Education } from './features/education';
+import { Certifications } from './features/certifications';
+import { Contact } from './features/contact';
 
 export default function App() {
   return (

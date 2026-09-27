@@ -1,4 +1,4 @@
-import { cn } from "../../lib/utils";
+import { cn } from "../../utils/cn";
 
 const variants = {
   default: "text-slate-600 dark:text-slate-200",

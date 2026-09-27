@@ -1,33 +1,10 @@
-import { GraduationCap, School } from "lucide-react";
-import Section from "./Section";
-import SectionHeader from "./SectionHeader";
-import Heading from "../ui/Heading";
-import Text from "../ui/Text";
-import Card from "../ui/Card";
-import Badge from "../ui/Badge";
-
-const educationData = [
-  {
-    id: "college",
-    icon: GraduationCap,
-    date: "2022 - 2026",
-    title: "BS Information Technology",
-    tag: "Web and Mobile App Development",
-    subtitle: "Bulacan State University - Main Campus",
-    description:
-      "Specialized in web and mobile application development, modern software engineering practices, and database management.",
-  },
-  {
-    id: "highschool",
-    icon: School,
-    date: "2016 - 2022",
-    title: "Science, Technology, Engineering and Mathematics",
-    tag: "STEM",
-    subtitle: "Lolomboy National High School",
-    description:
-      "Focused on advanced mathematics, basic programming, physics, and technological research fundamentals.",
-  },
-];
+import Section from "../../../components/layout/Section";
+import SectionHeader from "../../../components/layout/SectionHeader";
+import Heading from "../../../components/ui/Heading";
+import Text from "../../../components/ui/Text";
+import Card from "../../../components/ui/Card";
+import Badge from "../../../components/ui/Badge";
+import { educationData } from "../data";
 
 function EducationCard({ item }) {
   const Icon = item.icon;
