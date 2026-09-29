@@ -1,16 +1,17 @@
 import { cn } from "../../utils/cn";
 
+const subtle = "bg-brand/10 text-brand-ink border border-brand/20";
+const chip =
+  "px-2.5 py-1 rounded-md text-ink-quiet bg-panel-raised/60 border border-line-strong";
+
 const badgeVariants = {
-  default:
-    "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  default: subtle,
   // Status pills: "Available for work", "Live Demo Ready"
-  status:
-    "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
+  status: subtle,
   // Tech stack tags: Projects + Certifications
-  tag: "px-2.5 py-1 text-xs font-mono text-slate-300 bg-slate-800/60 rounded-md border border-slate-700/50",
+  tag: chip,
   // Alias of tag — skill pills in Certifications
-  skill:
-    "px-2.5 py-1 text-xs font-mono text-slate-300 bg-slate-800/60 rounded-md border border-slate-700/50",
+  skill: chip,
 };
 
 const badgeSizes = {
@@ -40,8 +41,8 @@ export default function Badge({
     >
       {dot && (
         <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-ink opacity-75" />
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-ink" />
         </span>
       )}
       {children}
