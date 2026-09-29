@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { cn } from "../../../utils/cn";
 import Section from "../../../components/layout/Section";
 import SectionHeader from "../../../components/layout/SectionHeader";
 import Badge from "../../../components/ui/Badge";
 import Heading from "../../../components/ui/Heading";
 import Text from "../../../components/ui/Text";
 import Card from "../../../components/ui/Card";
+import Button from "../../../components/ui/Button";
+import WindowChrome from "../../../components/ui/WindowChrome";
 import { ExternalLink, Briefcase, ZoomIn, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { webTechStack, mobileTechStack } from "../data";
 
@@ -13,6 +16,103 @@ const githubIcon = (
     <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
   </svg>
 );
+
+function ProjectCard({
+  title,
+  description,
+  tech,
+  liveHref,
+  repoHref,
+  chromeTitle,
+  onZoom,
+  previewClassName = "block",
+  children,
+}) {
+  return (
+    <Card
+      group
+      className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-accent/40 hover:shadow-halo"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
+        <div className="flex items-center gap-3">
+          <Badge variant="status" dot size="sm">
+            Live Demo Ready
+          </Badge>
+          <span className="text-xs text-muted">Featured Project</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Button
+            as="a"
+            variant="soft"
+            size="icon-sm"
+            href={liveHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Live preview"
+            title="Live demo"
+          >
+            <ExternalLink size={18} />
+          </Button>
+          <Button
+            as="a"
+            variant="soft"
+            size="icon-sm"
+            href={repoHref}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Source code"
+            title="Source code"
+          >
+            {githubIcon}
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
+        <div className="space-y-5">
+          <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl">
+            <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 text-accent shrink-0">
+              <Briefcase size={17} />
+            </span>
+            {title}
+          </Heading>
+          <Text variant="muted" size="sm" className="text-ink-quiet leading-relaxed">
+            {description}
+          </Text>
+          <div className="flex flex-wrap gap-2">
+            {tech.map((item) => (
+              <span
+                key={item}
+                className="px-2.5 py-1 rounded-md text-xs font-mono text-ink-quiet bg-panel-raised/50 border border-line-strong transition-colors duration-200 group-hover:border-accent/30"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative rounded-xl overflow-hidden border border-line bg-canvas/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-halo-sm">
+          <WindowChrome title={chromeTitle} />
+          <div className="relative overflow-hidden border-t border-line">
+            <button
+              type="button"
+              onClick={onZoom}
+              aria-label={`Zoom into ${title} preview`}
+              className={cn("group/img relative w-full cursor-zoom-in", previewClassName)}
+            >
+              {children}
+              <span className="absolute inset-0 bg-gradient-to-t from-canvas/40 to-transparent pointer-events-none" />
+              <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-ink-body bg-panel/90 border border-line backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
+                <ZoomIn size={13} className="text-accent" />
+                Zoom
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 export default function Projects() {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -45,7 +145,7 @@ export default function Projects() {
     const container = scrollRef.current;
     if (!container) return;
 
-    function onScroll() {
+    function closestCard() {
       const cards = Array.from(container.children);
       const scrollLeft = container.scrollLeft;
       let closest = 0;
@@ -57,7 +157,11 @@ export default function Projects() {
           closest = i;
         }
       });
-      setCurrent(closest);
+      return closest;
+    }
+
+    function onScroll() {
+      setCurrent(closestCard());
     }
 
     function onMouseDown(e) {
@@ -80,18 +184,7 @@ export default function Projects() {
       dragging.current = false;
       container.style.scrollBehavior = "smooth";
       container.style.cursor = "";
-      const cards = Array.from(container.children);
-      const scrollLeft = container.scrollLeft;
-      let closest = 0;
-      let minDist = Infinity;
-      cards.forEach((card, i) => {
-        const dist = Math.abs(card.offsetLeft - 16 - scrollLeft);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      });
-      scrollTo(closest);
+      scrollTo(closestCard());
     }
 
     container.addEventListener("scroll", onScroll, { passive: true });
@@ -122,9 +215,9 @@ export default function Projects() {
   }, [previewOpen]);
 
   return (
-    <Section id="projects" glow={false} containerClass="max-w-6xl">
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-teal-400/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-400/15 rounded-full blur-3xl pointer-events-none" />
+    <Section id="projects" glow={false}>
+      <div className="glow -top-40 -right-40 bg-accent/15" />
+      <div className="glow -bottom-40 -left-40 bg-glow/15" />
 
       <SectionHeader
         title="Projects"
@@ -137,7 +230,7 @@ export default function Projects() {
           <button
             onClick={prev}
             aria-label="Previous project"
-            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-400 hover:border-teal-400/40 transition-all shadow-lg"
+            className="absolute -left-2 sm:-left-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-panel-raised/80 backdrop-blur-md border border-line text-ink-quiet hover:text-accent hover:border-accent/40 transition-all duration-200 shadow-lg"
           >
             <ChevronLeft size={20} />
           </button>
@@ -146,7 +239,7 @@ export default function Projects() {
           <button
             onClick={next}
             aria-label="Next project"
-            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:text-teal-500 dark:hover:text-teal-400 hover:border-teal-400/40 transition-all shadow-lg"
+            className="absolute -right-2 sm:-right-5 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-10 h-10 rounded-full bg-panel-raised/80 backdrop-blur-md border border-line text-ink-quiet hover:text-accent hover:border-accent/40 transition-all duration-200 shadow-lg"
           >
             <ChevronRight size={20} />
           </button>
@@ -157,206 +250,53 @@ export default function Projects() {
           className="flex overflow-x-auto snap-always -mx-4 px-4 sm:-mx-8 sm:px-8 gap-8 pb-4 scrollbar-hide snap-smooth cursor-grab select-none"
         >
           {/* Application Tracker */}
-          <Card
-            group
-            className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
+          <ProjectCard
+            title="Application Tracker"
+            description="A modern job application tracking platform designed to help developers manage job applications, interview pipelines, offer details, and salary analytics in one streamlined workflow."
+            tech={webTechStack}
+            liveHref="https://application-tracker-dun.vercel.app/"
+            repoHref="https://github.com/bulsu-rggnzls/Application-Tracker"
+            chromeTitle="application-tracker.vercel.app"
+            onZoom={() => {
+              setPreviewProject("tracker");
+              setPreviewOpen(true);
+            }}
           >
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
-              <div className="flex items-center gap-3">
-                <Badge variant="status" dot size="sm">
-                  Live Demo Ready
-                </Badge>
-                <span className="text-xs text-slate-400 dark:text-slate-500">
-                  Featured Project
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <a
-                  href="https://application-tracker-dun.vercel.app/"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Live preview"
-                  title="Live demo"
-                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-                >
-                  <ExternalLink size={18} />
-                </a>
-                <a
-                  href="https://github.com/bulsu-rggnzls/Application-Tracker"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Source code"
-                  title="Source code"
-                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-                >
-                  {githubIcon}
-                </a>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
-              <div className="space-y-5">
-                <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl text-slate-900 dark:text-white">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
-                    <Briefcase size={17} />
-                  </span>
-                  Application Tracker
-                </Heading>
-                <Text variant="muted" size="sm" className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                  A modern job application tracking platform designed to help
-                  developers manage job applications, interview pipelines, offer
-                  details, and salary analytics in one streamlined workflow.
-                </Text>
-                <div className="flex flex-wrap gap-2">
-                  {webTechStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-teal-400/40 dark:group-hover:border-teal-400/40 group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)] dark:group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)]">
-                <div className="flex items-center justify-between bg-slate-900/90 border-b border-white/10 px-4 py-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                  </div>
-                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                    application-tracker.vercel.app
-                  </span>
-                </div>
-                <div className="relative overflow-hidden border-t border-white/[0.08]">
-                  <button
-                    type="button"
-                    onClick={() => { setPreviewProject("tracker"); setPreviewOpen(true); }}
-                    aria-label="Zoom into Application Tracker preview"
-                    className="group/img relative block w-full cursor-zoom-in"
-                  >
-                    <img
-                      src="/assets/images/Application-Tracker.png"
-                      alt="Application Tracker preview — click to zoom"
-                      className="w-full h-56 sm:h-64 object-cover object-top brightness-[0.92] transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
-                      loading="lazy"
-                    />
-                    <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
-                    <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-slate-200 bg-slate-900/90 border border-white/10 backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
-                      <ZoomIn size={13} className="text-teal-400" />
-                      Zoom
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Card>
+            <img
+              src="/assets/images/Application-Tracker.png"
+              alt="Application Tracker preview — click to zoom"
+              className="w-full h-56 sm:h-64 object-cover object-top brightness-[0.92] transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-100"
+              loading="lazy"
+            />
+          </ProjectCard>
 
           {/* iStocked */}
-          <Card
-            group
-            className="min-w-full snap-start p-5 sm:p-8 rounded-2xl hover:border-teal-400/40 dark:hover:border-teal-400/40 hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)] dark:hover:shadow-[0_16px_48px_-16px_rgba(45,212,191,0.35)]"
+          <ProjectCard
+            title="iStocked"
+            description="A mobile dashboard for phone sellers to track inventory, record sales, and monitor income, profits, and costs in one streamlined platform built with React Native."
+            tech={mobileTechStack}
+            liveHref="#"
+            repoHref="https://github.com/bulsu-rggnzls/istocked"
+            chromeTitle="iStocked"
+            previewClassName="flex h-56 sm:h-64 gap-2 p-2"
+            onZoom={() => {
+              setPreviewProject("iphone");
+              setPreviewOpen(true);
+            }}
           >
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8">
-              <div className="flex items-center gap-3">
-                <Badge variant="status" dot size="sm">
-                  Live Demo Ready
-                </Badge>
-                <span className="text-xs text-slate-400 dark:text-slate-500">
-                  Featured Project
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Live preview"
-                  title="Live demo"
-                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-                >
-                  <ExternalLink size={18} />
-                </a>
-                <a
-                  href="https://github.com/bulsu-rggnzls/istocked"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Source code"
-                  title="Source code"
-                  className="p-2 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-teal-400 hover:bg-white/10 hover:border-teal-400/40 transition-colors"
-                >
-                  {githubIcon}
-                </a>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
-              <div className="space-y-5">
-                <Heading as="h3" size="h3" className="flex items-center gap-2.5 text-xl text-slate-900 dark:text-white">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/10 text-teal-400 shrink-0">
-                    <Briefcase size={17} />
-                  </span>
-                  iStocked
-                </Heading>
-                <Text variant="muted" size="sm" className="text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                  A mobile dashboard for phone sellers to track inventory, record
-                  sales, and monitor income, profits, and costs in one streamlined
-                  platform built with React Native.
-                </Text>
-                <div className="flex flex-wrap gap-2">
-                  {mobileTechStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-800/50 text-slate-300 border border-slate-700/60 transition-colors duration-200 group-hover:border-teal-400/30"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative rounded-xl overflow-hidden border border-white/10 bg-slate-950/80 shadow-2xl transition-all duration-500 group-hover:-translate-y-1 group-hover:border-teal-400/40 dark:group-hover:border-teal-400/40 group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)] dark:group-hover:shadow-[0_10px_30px_-10px_rgba(45,212,191,0.35)]">
-                <div className="flex items-center justify-between bg-slate-900/90 border-b border-white/10 px-4 py-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                  </div>
-                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                    iStocked
-                  </span>
-                </div>
-                <div className="relative overflow-hidden border-t border-white/[0.08]">
-                  <button
-                    type="button"
-                    onClick={() => { setPreviewProject("iphone"); setPreviewOpen(true); }}
-                    aria-label="Zoom into iStocked preview"
-                    className="group/img relative flex w-full h-56 sm:h-64 cursor-zoom-in gap-2 p-2"
-                  >
-                    <img
-                      src="/assets/images/iphone1.png"
-                      alt="iStocked — main metrics"
-                      className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
-                      loading="lazy"
-                    />
-                    <img
-                      src="/assets/images/iphone2.png"
-                      alt="iStocked — device preview"
-                      className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
-                      loading="lazy"
-                    />
-                    <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none" />
-                    <span className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-mono text-slate-200 bg-slate-900/90 border border-white/10 backdrop-blur-sm opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
-                      <ZoomIn size={13} className="text-teal-400" />
-                      Zoom
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Card>
+            <img
+              src="/assets/images/iphone1.png"
+              alt="iStocked — main metrics"
+              className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
+              loading="lazy"
+            />
+            <img
+              src="/assets/images/iphone2.png"
+              alt="iStocked — device preview"
+              className="h-full w-1/2 object-cover object-top rounded-lg brightness-[0.92] transition-all duration-500 ease-out group-hover/img:scale-[1.03] group-hover/img:brightness-100"
+              loading="lazy"
+            />
+          </ProjectCard>
         </div>
 
         <div className="flex items-center justify-center gap-2 mt-6">
@@ -367,8 +307,8 @@ export default function Projects() {
               aria-label={`Go to project ${i + 1}`}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 current === i
-                  ? "bg-teal-400 w-6"
-                  : "bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"
+                  ? "bg-accent w-6"
+                  : "bg-faint/70 hover:bg-faint"
               }`}
             />
           ))}
@@ -377,34 +317,29 @@ export default function Projects() {
 
       {previewOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8"
+          className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center p-4 sm:p-8"
           onClick={() => setPreviewOpen(false)}
           role="dialog"
           aria-modal="true"
           aria-label="Project full preview"
         >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]" />
+          <div className="absolute inset-0 bg-canvas/70 backdrop-blur-sm animate-fade-in" />
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-slate-950 shadow-2xl animate-[zoomIn_0.25s_ease-out]"
+            className="relative w-full max-w-5xl rounded-2xl overflow-hidden border border-line bg-canvas shadow-2xl animate-zoom-in"
           >
-            <div className="flex items-center justify-between bg-slate-200/70 dark:bg-slate-900/90 border-b border-black/10 dark:border-white/10 px-4 py-2.5">
-              <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-              </div>
-              <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                {previewProject === "tracker" ? "application-tracker.vercel.app" : "iStocked"}
-              </span>
-              <button
-                onClick={() => setPreviewOpen(false)}
-                aria-label="Close preview"
-                className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300 hover:text-teal-400 dark:hover:text-teal-400 border border-black/5 dark:border-white/10 transition-colors"
-              >
-                <X size={16} />
-              </button>
-            </div>
+            <WindowChrome
+              title={previewProject === "tracker" ? "application-tracker.vercel.app" : "iStocked"}
+              right={
+                <button
+                  onClick={() => setPreviewOpen(false)}
+                  aria-label="Close preview"
+                  className="p-1.5 rounded-lg bg-panel-raised text-ink-quiet hover:text-accent border border-line transition-colors duration-200"
+                >
+                  <X size={16} />
+                </button>
+              }
+            />
             <div className="max-h-[75vh] overflow-y-auto">
               {previewProject === "tracker" ? (
                 <img
