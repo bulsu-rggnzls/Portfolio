@@ -11,8 +11,8 @@ export default function ThemeToggle({ className, ...props }) {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       title={isDark ? "Light Mode" : "Dark Mode"}
       className={cn(
-        "p-2 rounded-full transition-colors duration-300",
-        "text-slate-600 hover:bg-slate-200 dark:text-white dark:hover:bg-slate-700",
+        "p-2 rounded-full transition-colors duration-200",
+        "text-ink hover:bg-panel-raised",
         className
       )}
       {...props}

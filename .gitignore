@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local agent tooling (impeccable skill, harness hooks)
+.agents/
+.codex/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -6,6 +6,8 @@ import Section from "../../../components/layout/Section";
 import SectionHeader from "../../../components/layout/SectionHeader";
 import Card from "../../../components/ui/Card";
 import Badge from "../../../components/ui/Badge";
+import Button from "../../../components/ui/Button";
+import Field from "../../../components/ui/Field";
 import { WEB3FORMS_KEY } from "../../../config/env";
 import { contactInfo } from "../data";
 
@@ -56,7 +58,7 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-10 items-stretch">
         <div className="flex flex-col justify-between h-full space-y-6">
           <div className="space-y-6">
-            <Text variant="default" size="base" className="text-slate-200">
+            <Text variant="default" size="base">
               I&apos;m currently open to full-time opportunities and freelance
               projects. Let&apos;s build something amazing together!
             </Text>
@@ -64,7 +66,7 @@ export default function Contact() {
             <div className="space-y-4">
               {contactInfo.map(({ icon: Icon, label, value, href }) => (
                 <div key={label} className="flex items-start sm:items-center gap-4 min-w-0">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 text-brand-ink shrink-0">
                     <Icon size={18} />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -74,12 +76,12 @@ export default function Contact() {
                     {href ? (
                       <a
                         href={href}
-                        className="block text-sm font-medium text-slate-200 hover:text-emerald-400 transition-colors break-words"
+                        className="block text-sm font-medium text-ink-body hover:text-brand-ink transition-colors duration-200 break-words"
                       >
                         {value}
                       </a>
                     ) : (
-                      <Text variant="default" size="sm" className="font-medium text-slate-200 break-words">
+                      <Text variant="default" size="sm" className="font-medium break-words">
                         {value}
                       </Text>
                     )}
@@ -94,17 +96,17 @@ export default function Contact() {
           </Badge>
         </div>
 
-        <Card className="rounded-2xl p-5 sm:p-6 shadow-lg shadow-lg shadow-emerald-500/5">
+        <Card className="rounded-2xl p-5 sm:p-6 shadow-lg shadow-brand/5">
           {isSent ? (
             <div className="flex flex-col items-center justify-center text-center py-8 space-y-3">
-              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                <CheckCircle2 size={28} className="text-emerald-400" />
+              <div className="flex items-center justify-center w-14 h-14 rounded-full bg-brand/10 border border-brand/20">
+                <CheckCircle2 size={28} className="text-brand-ink" />
               </div>
-              <Heading as="h3" size="h3" className="text-slate-100">Message Received!</Heading>
-              <Text variant="muted" size="xs" className="max-w-sm text-slate-400">
+              <Heading as="h3" size="h3">Message Received!</Heading>
+              <Text variant="muted" size="xs" className="max-w-sm">
                 Thank you, Argie has received your message and will get back to
                 you soon at{" "}
-                <span className="text-emerald-400 font-mono text-[11px]">
+                <span className="text-brand-ink font-mono text-[11px]">
                   rggonzales.work@gmail.com
                 </span>
                 .
@@ -113,74 +115,51 @@ export default function Contact() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
               {errorMessage && (
-                <div className="flex items-start gap-2 p-2.5 rounded-xl bg-red-500/10 border border-red-400/30 text-red-400 text-xs">
+                <div className="flex items-start gap-2 p-2.5 rounded-xl bg-danger/10 border border-danger/30 text-danger text-xs">
                   <AlertCircle size={14} className="shrink-0 mt-0.5" />
                   <span>{errorMessage}</span>
                 </div>
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-1">
-                  <label className="font-mono text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    disabled={isSubmitting}
-                    className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="font-mono text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    disabled={isSubmitting}
-                    className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="font-mono text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-                  Subject
-                </label>
-                <input
+                <Field
+                  label="Your Name"
                   type="text"
-                  name="subject"
+                  name="name"
                   required
                   disabled={isSubmitting}
-                  className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all disabled:opacity-50"
-                  placeholder="Project Collaboration"
+                  placeholder="John Doe"
+                />
+                <Field
+                  label="Your Email"
+                  type="email"
+                  name="email"
+                  required
+                  disabled={isSubmitting}
+                  placeholder="john@example.com"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="font-mono text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
-                  Your Message
-                </label>
-                <textarea
-                  name="message"
-                  required
-                  rows={4}
-                  disabled={isSubmitting}
-                  className="w-full bg-slate-950/60 border border-slate-800 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 text-slate-200 rounded-xl px-4 py-3 placeholder:text-slate-600 text-sm outline-none transition-all resize-none disabled:opacity-50"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              <button
-                type="submit"
+              <Field
+                label="Subject"
+                type="text"
+                name="subject"
+                required
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/20 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
-              >
+                placeholder="Project Collaboration"
+              />
+
+              <Field
+                label="Your Message"
+                as="textarea"
+                name="message"
+                required
+                rows={4}
+                disabled={isSubmitting}
+                placeholder="Tell me about your project..."
+              />
+
+              <Button type="submit" disabled={isSubmitting} className="w-full">
                 {isSubmitting ? (
                   <>
                     <Loader2 size={15} className="animate-spin" />
@@ -192,7 +171,7 @@ export default function Contact() {
                     <span>SEND MESSAGE</span>
                   </>
                 )}
-              </button>
+              </Button>
             </form>
           )}
         </Card>
