@@ -1,66 +1,101 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
+/* ============================================================
+   Design tokens — single source of truth for every color.
+   Dark-only theme (the app locks .dark on <html>).
+   Change a value here and it updates the whole app.
+   ============================================================ */
 @theme {
   --font-sans: "Space Mono", monospace;
+
+  /* Surfaces */
+  --color-canvas: #020617;
+  --color-veil: #0e1015;
+  --color-surface: rgb(15 23 42 / 0.4);
+  --color-panel: #0f172a;
+  --color-panel-raised: #1e293b;
+
+  /* Ink ramp (text emphasis) */
+  --color-ink: #f1f5f9;
+  --color-ink-body: #e2e8f0;
+  --color-ink-quiet: #cbd5e1;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  /* Lines */
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(51 65 85 / 0.5);
+
+  /* Brand */
+  --color-brand: #10b981;
+  --color-brand-ink: #34d399;
+  --color-accent: #2dd4bf;
+  --color-glow: #c084fc;
+
+  /* Status */
+  --color-danger: #f87171;
+
+  /* Console sub-palette (GitHub-dark mimic in DevConsoleModal) */
+  --color-console: #0d1117;
+  --color-console-bar: #161b22;
+  --color-console-line: #30363d;
+  --color-console-ink: #8b949e;
+  --color-console-bright: #f0f6fc;
+
+  /* Named shadows (brand halos) */
+  --shadow-halo: 0 16px 48px -16px rgb(45 212 191 / 0.35);
+  --shadow-halo-sm: 0 10px 30px -10px rgb(45 212 191 / 0.35);
+  --shadow-halo-ring: 0 0 16px -4px rgb(45 212 191 / 0.3);
+  --shadow-halo-portrait: 0 0 80px rgb(16 185 129 / 0.4);
+
+  /* Motion */
+  --animate-fade-in: fadeIn 0.2s ease-out;
+  --animate-zoom-in: zoomIn 0.25s ease-out;
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
-
+/* Semantic z-index scale — never hardcode stacking numbers. */
 :root {
-  --nav-bg: rgba(255, 255, 255, 0.7);
-  --body-bg: #ffffff;
-  --body-color: #111827;
+  --z-nav: 50;
+  --z-modal: 100;
+  --z-intro: 1000;
 }
 
-.dark {
-  --nav-bg: rgba(2, 6, 23, 0.7);
-  --body-bg: #020617;
-  --body-color: #f1f5f9;
-}
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
 
-* {
-  box-sizing: border-box;
-}
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
-html, body {
-  margin: 0;
-  min-width: 320px;
-}
-
-body {
-  background-color: var(--body-bg);
-  color: var(--body-color);
-  overflow-x: hidden;
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-@media (max-width: 640px) {
+  html,
   body {
-    -webkit-text-size-adjust: 100%;
+    min-width: 320px;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    overflow-x: hidden;
+  }
+
+  svg {
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    body {
+      -webkit-text-size-adjust: 100%;
+    }
   }
 }
 
-.dark nav a {
-  color: #f1f5f9 !important;
-}
-
-.dark #home h1 {
-  color: #f1f5f9 !important;
-}
-
-.dark #home p {
-  color: #94a3b8 !important;
-}
+/* ============================================================
+   Utilities
+   ============================================================ */
 
 @utility scrollbar-hide {
   -ms-overflow-style: none;
@@ -74,6 +109,16 @@ svg {
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   overscroll-behavior-x: contain;
+}
+
+/* Ambient glow orb: pair with a tint, e.g. "glow bg-accent/15" */
+@utility glow {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 9999px;
+  filter: blur(64px);
+  pointer-events: none;
 }
 
 @keyframes fadeIn {
@@ -94,4 +139,31 @@ svg {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* ============================================================
+   Swiper pagination (Certifications) — colors from tokens
+   ============================================================ */
+.custom-swiper-bullet {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 999px !important;
+  background: color-mix(in oklab, var(--color-accent) 25%, transparent) !important;
+  border: 1px solid color-mix(in oklab, var(--color-accent) 30%, transparent) !important;
+  opacity: 1 !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
+}
+.custom-swiper-bullet.swiper-pagination-bullet-active {
+  background: color-mix(in oklab, var(--color-accent) 90%, transparent) !important;
+  border-color: color-mix(in oklab, var(--color-accent) 70%, transparent) !important;
+  box-shadow: 0 0 12px -2px color-mix(in oklab, var(--color-accent) 50%, transparent) !important;
+  width: 24px !important;
+}
+.swiper-pagination {
+  bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
 }
