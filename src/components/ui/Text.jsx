@@ -1,9 +1,9 @@
 import { cn } from "../../utils/cn";
 
 const variants = {
-  default: "text-slate-600 dark:text-slate-200",
-  muted: "text-slate-400 dark:text-slate-400",
-  accent: "text-teal-400",
+  default: "text-ink-body",
+  muted: "text-muted",
+  accent: "text-accent",
 };
 
 const sizes = {
