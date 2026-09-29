@@ -18,7 +18,7 @@ export default function Heading({
   return (
     <Tag
       className={cn(
-        "tracking-tight text-slate-900 dark:text-slate-100",
+        "tracking-tight text-ink",
         sizes[size || Tag],
         className
       )}
