@@ -10,13 +10,13 @@ function EducationCard({ item }) {
   const Icon = item.icon;
 
   return (
-    <Card className="flex-1 p-6 shadow-lg shadow-teal-500/5 hover:shadow-teal-500/15 hover:border-teal-400/50">
-      <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-slate-900 dark:bg-black border border-teal-400/40 shadow-[0_0_16px_-4px_rgba(45,212,191,0.3)] mb-4">
-        <Icon size={20} className="text-teal-400" />
+    <Card className="flex-1 p-6 shadow-lg shadow-accent/5 hover:shadow-accent/15 hover:border-accent/50">
+      <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-canvas border border-accent/40 shadow-halo-ring mb-4">
+        <Icon size={20} className="text-accent" />
       </div>
 
       <div className="mb-3">
-        <span className="inline-block text-xs font-semibold tracking-wider px-3 py-1 rounded-full bg-slate-800 dark:bg-slate-900 text-teal-400 border border-teal-400/20">
+        <span className="inline-block text-xs font-semibold tracking-wider px-3 py-1 rounded-full bg-panel text-accent border border-accent/20">
           {item.date}
         </span>
       </div>
@@ -42,21 +42,21 @@ function EducationCard({ item }) {
 
 function TimelineDot() {
   return (
-    <div className="relative z-10 w-4 h-4 shrink-0 rounded-full border-2 border-teal-400 bg-slate-900 dark:bg-black shadow-[0_0_10px_rgba(45,212,191,0.3)]" />
+    <div className="relative z-10 w-4 h-4 shrink-0 rounded-full border-2 border-accent bg-canvas shadow-halo-ring" />
   );
 }
 
 function TimelineLine() {
   return (
-    <div className="w-0.5 flex-1 bg-gradient-to-b from-teal-400/30 to-teal-400/10" />
+    <div className="w-0.5 flex-1 bg-gradient-to-b from-accent/30 to-accent/10" />
   );
 }
 
 export default function Education() {
   return (
     <Section id="education" glow={false}>
-      <div className="absolute top-40 right-0 w-96 h-96 bg-teal-400/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 left-0 w-96 h-96 bg-purple-400/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="glow top-40 right-0 bg-accent/15" />
+      <div className="glow -bottom-40 left-0 bg-glow/15" />
 
       <div className="space-y-14">
         <SectionHeader
@@ -80,7 +80,7 @@ export default function Education() {
         </div>
 
         <div className="relative hidden md:block">
-          <div className="absolute left-1/2 inset-y-8 w-0.5 -translate-x-1/2 bg-gradient-to-b from-teal-400/30 via-teal-400/20 to-teal-400/10" />
+          <div className="absolute left-1/2 inset-y-8 w-0.5 -translate-x-1/2 bg-gradient-to-b from-accent/30 via-accent/20 to-accent/10" />
 
           {educationData.map((item, i) => {
             const isLeft = i % 2 === 0;
@@ -90,7 +90,7 @@ export default function Education() {
                   {isLeft && (
                     <div className="relative">
                       <EducationCard item={item} />
-                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-6 h-0.5 bg-gradient-to-r from-teal-400/40 to-teal-400/20" />
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-6 h-0.5 bg-gradient-to-r from-accent/40 to-accent/20" />
                     </div>
                   )}
                 </div>
@@ -102,7 +102,7 @@ export default function Education() {
                 <div className="flex-1">
                   {!isLeft && (
                     <div className="relative">
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full w-6 h-0.5 bg-gradient-to-r from-teal-400/20 to-teal-400/40" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full w-6 h-0.5 bg-gradient-to-r from-accent/20 to-accent/40" />
                       <EducationCard item={item} />
                     </div>
                   )}
