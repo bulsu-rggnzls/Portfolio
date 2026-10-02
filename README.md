@@ -1,16 +1,47 @@
-# React + Vite
+# Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal portfolio site built with **React 19 + Vite 8 + TypeScript 7 + Tailwind CSS 4**.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server with HMR |
+| `npm run build` | Type-check, then build for production |
+| `npm run typecheck` | Run `tsc --noEmit` |
+| `npm run lint` | Run oxlint |
+| `npm run preview` | Preview the production build |
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19, Vite 8, TypeScript 7 in `strict` mode (`noUncheckedIndexedAccess`, `verbatimModuleSyntax`)
+- Tailwind CSS 4 driven by semantic design tokens in `src/index.css`
+- Framer Motion, Swiper, lucide-react
+- oxlint for static analysis
 
-## Expanding the Oxlint configuration
+## Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```
+src/
+├── App.tsx             # Section composition
+├── main.tsx            # Entry point + providers
+├── components/
+│   ├── ui/             # Design-system primitives: Button, Badge, Card, Field, Heading, Text, WindowChrome
+│   └── layout/         # Section, SectionHeader, Navbar, IntroOverlay, ThemeToggle
+├── features/           # One folder per page section: components/ + typed data + index.ts barrel
+├── hooks/              # useEscapeKey, useSnapCarousel
+├── config/             # Navigation, environment access
+├── store/              # Theme context + useTheme
+├── utils/              # cn()
+└── index.css           # Design tokens (@theme)
+```
+
+## Conventions
+
+- Cross-module imports use the `@/*` alias: `import { Button } from "@/components/ui/Button"`.
+- Every action trigger renders through `Button`; every input renders through `Field`. Styling is applied via the `variant`, `size` and `className` props — primitives themselves are never edited to fix a call site.
+- Colors come from semantic tokens only (`bg-brand`, `text-muted`, `border-line`). No raw hex outside the documented exceptions in `DESIGN.md`.
+- Data lives next to the section that renders it and is typed (`features/*/data.ts`).
+- `npm run build` type-checks before bundling.
+
+See [DESIGN.md](./DESIGN.md) for the design system and [PRODUCT.md](./PRODUCT.md) for product intent.
