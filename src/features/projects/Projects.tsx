@@ -18,7 +18,7 @@ import Text from "@/components/ui/Text";
 import WindowChrome from "@/components/ui/WindowChrome";
 import { mobileTechStack, webTechStack } from "@/features/projects/data";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
-import { useSnapCarousel } from "@/hooks/useSnapCarousel";
+import { useSnapCarousel } from "./useSnapCarousel";
 import { cn } from "@/utils/cn";
 
 const PROJECT_COUNT = 2;
