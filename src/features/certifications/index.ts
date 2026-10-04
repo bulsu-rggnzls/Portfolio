@@ -1,1 +1,1 @@
-export { default as Certifications } from "./components/Certifications";
+export { default as Certifications } from "./Certifications";
