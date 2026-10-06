@@ -6,8 +6,8 @@ import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import Heading from "@/components/ui/Heading";
 import Text from "@/components/ui/Text";
-import DevConsoleModal from "@/features/hero/components/DevConsoleModal";
 import { socialLinks } from "@/features/hero/data";
+import DevConsoleModal from "./DevConsoleModal";
 
 export default function Hero() {
   const [showAbout, setShowAbout] = useState(false);
