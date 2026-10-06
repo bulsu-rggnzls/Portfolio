@@ -135,6 +135,7 @@ export default function Certifications() {
             }}
             modules={[Pagination]}
             pagination={{
+              el: "#certifications-pagination",
               clickable: true,
               renderBullet: (_, className) =>
                 `<span class="${className} custom-swiper-bullet"></span>`,
@@ -145,7 +146,7 @@ export default function Certifications() {
               640: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
             }}
-            className="pb-14 [&_.swiper-wrapper]:items-stretch"
+            className="[&_.swiper-wrapper]:items-stretch"
           >
             {certificates.map((cert) => (
               <SwiperSlide key={cert.id} className="!h-auto">
@@ -153,6 +154,7 @@ export default function Certifications() {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div id="certifications-pagination" className="swiper-pagination mt-6" />
         </div>
       </div>
     </Section>
