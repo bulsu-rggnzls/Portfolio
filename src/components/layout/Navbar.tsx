@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 inset-x-0 z-[var(--z-nav)] flex items-center justify-center px-4 sm:px-8 h-16 backdrop-blur-xl bg-canvas/70 transition-colors duration-200">
       {/* Desktop links */}
-      <ul className="hidden md:flex items-center gap-10 sm:gap-16 list-none m-0 p-0">
+      <ul className="hidden md:flex items-center gap-6 lg:gap-10 xl:gap-12 list-none m-0 p-0">
         {NAV_LINKS.map((link) => (
           <li key={link.href}>
             <a
