@@ -1,5 +1,6 @@
 import IntroOverlay from "@/components/layout/IntroOverlay";
 import Navbar from "@/components/layout/Navbar";
+import { GitHubActivity } from "@/features/activity";
 import { Certifications } from "@/features/certifications";
 import { Contact } from "@/features/contact";
 import { Education } from "@/features/education";
@@ -16,6 +17,7 @@ export default function App() {
         <Hero />
         <Projects />
         <Skills />
+        <GitHubActivity />
         <Education />
         <Certifications />
         <Contact />
